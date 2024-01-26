@@ -10,7 +10,6 @@ Le testing a été réalisé conformément au plan fourni par l'equipe . Il couv
 ## Structure du Projet
 
 ```
-./
 ├── frontend/
 │   ├── [Dossiers du code source front-end]
 ├── backend/
