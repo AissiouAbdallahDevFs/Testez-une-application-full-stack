@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import com.openclassrooms.starterjwt.models.User;
 
 @Builder
 @AllArgsConstructor
@@ -33,7 +34,13 @@ public class UserDetailsImpl implements UserDetails {
   private String password;  
   
   public Collection<? extends GrantedAuthority> getAuthorities() {        
-      return new HashSet<GrantedAuthority>();
+    return new HashSet<GrantedAuthority>();
+  }
+
+  public UserDetailsImpl(User user) {
+    this.id = user.getId();
+    this.username = user.getEmail();
+    this.password = user.getPassword();
   }
 
   @Override
