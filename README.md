@@ -1,8 +1,4 @@
-Je ne peux pas créer des fichiers ou les sauvegarder directement dans votre système à partir de cette interface. Cependant, je peux vous fournir le contenu que vous pouvez copier et coller dans un fichier README.md dans votre repository.
 
-Voici le contenu que vous pouvez utiliser :
-
-```
 # yoga-app- Testing
 
 Ce repository contient les artefacts liés au testing de l'application yoga-app avant son lancement.
@@ -73,7 +69,6 @@ ng serve
 L'application Angular sera accessible à l'adresse : `http://localhost:4200`
 
 
----
 
 **Auteur:** [AISSIOU]
 ```
