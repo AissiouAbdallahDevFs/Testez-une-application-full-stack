@@ -95,10 +95,10 @@ public class SpringBootSecurityJwtApplicationTests {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("yoga@studio.com");
         loginRequest.setPassword("test!1234");
-        Authentication authentication = Mockito.mock(Authentication.class);
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
+		
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(loginRequest);
         when(jwtUtils.generateJwtToken(any(Authentication.class))).thenReturn("token");
-        ResponseEntity<?> result = userController.authenticateUser(loginRequest);
+        ResponseEntity<?> result = authenticationManager.authenticate(loginRequest)
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isInstanceOf(JwtResponse.class);
         assertThat(((JwtResponse) result.getBody()).getToken()).isEqualTo("token");
