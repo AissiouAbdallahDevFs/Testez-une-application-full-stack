@@ -123,6 +123,7 @@ public class SpringBootSecurityJwtApplicationTests {
 	@Test
     void testBadCredentials() {
         LoginRequest loginRequest = new LoginRequest();
+		// bad credentials for test
         loginRequest.setEmail("yogoa@studio.com");
         loginRequest.setPassword("test!1234");
 		Throwable exception = assertThrows(BadCredentialsException.class, () -> {
@@ -130,7 +131,5 @@ public class SpringBootSecurityJwtApplicationTests {
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		});
 		assertEquals("Bad credentials", exception.getMessage());
-		
-	
     }
 }
