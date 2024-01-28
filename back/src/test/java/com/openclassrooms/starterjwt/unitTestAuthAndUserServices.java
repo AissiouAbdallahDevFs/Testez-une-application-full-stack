@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest
-public class unitTestAuth {
+public class unitTestAuthAndUserServices {
 
 	@InjectMocks
 	private UserController userController;
@@ -57,7 +57,7 @@ public class unitTestAuth {
 	@Mock
 	private AuthController authController;
 
-
+	// test find user by id
 	@Test
 	public void getUserByID() {
 		User user = new User();
@@ -67,24 +67,15 @@ public class unitTestAuth {
 		assert(result.getStatusCodeValue() == 200);
 	}
 
-	
+	// test for bad id on find user by id
 	@Test
-	public void testgetUserByID() {
+	public void testgetUserBadID() {
 		when(userService.findById(any(Long.class))).thenReturn(null); 
 		ResponseEntity<?>  result = userController.findById("1");
 		System.err.println(result);
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
-
-	@Test
-	public void login() {
-		User user = new User();
-		when(userService.findById(any(Long.class))).thenReturn(user); 
-		when(userMapper.toDto(any(User.class))).thenReturn(new UserDto());
-		ResponseEntity<?>  result = userController.findById("1");
-		assert(result.getStatusCodeValue() == 200);
-	}
-
+	// test bad credentials on login
 	@Test
     void testAuthenticateUser() {
         LoginRequest loginRequest = new LoginRequest();
@@ -94,7 +85,7 @@ public class unitTestAuth {
 			new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		assertThat(authentication.isAuthenticated()).isTrue();
 	}
-
+	// test generate jwt token
 	@Test
 	void testGenerateJwtToken() {
 		LoginRequest loginRequest = new LoginRequest();
@@ -105,7 +96,7 @@ public class unitTestAuth {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		assertThat(jwt).isNotNull();
 	}
-	
+	// test bad credentials on login
 	@Test
     void testBadCredentials() {
         LoginRequest loginRequest = new LoginRequest();
