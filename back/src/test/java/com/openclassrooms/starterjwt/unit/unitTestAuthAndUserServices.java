@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt;
+package com.openclassrooms.starterjwt.unit;
 
 import static org.mockito.ArgumentMatchers.any;
 import org.junit.jupiter.api.Test;
@@ -74,38 +74,4 @@ public class unitTestAuthAndUserServices {
 		System.err.println(result);
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
-	// test  good credentials on login
-	@Test
-    void testAuthenticateUser() {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail("yoga@studio.com");
-        loginRequest.setPassword("test!1234");
-		Authentication authentication = authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-		assertThat(authentication.isAuthenticated()).isTrue();
-	}
-	// test generate jwt token
-	@Test
-	void testGenerateJwtToken() {
-		LoginRequest loginRequest = new LoginRequest();
-		loginRequest.setEmail("yoga@studio.com");
-        loginRequest.setPassword("test!1234");
-		Authentication authentication = authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		assertThat(jwt).isNotNull();
-	}
-	// test bad credentials on login
-	@Test
-    void testBadCredentials() {
-        LoginRequest loginRequest = new LoginRequest();
-		// bad credentials for test
-        loginRequest.setEmail("yogoa@studio.com");
-        loginRequest.setPassword("test!1234");
-		Throwable exception = assertThrows(BadCredentialsException.class, () -> {
-			authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-		});
-		assertEquals("Bad credentials", exception.getMessage());
-    }
 }
