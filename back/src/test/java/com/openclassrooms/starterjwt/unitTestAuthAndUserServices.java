@@ -1,7 +1,6 @@
 package com.openclassrooms.starterjwt;
 
 import static org.mockito.ArgumentMatchers.any;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.openclassrooms.starterjwt.controllers.AuthController;
 import com.openclassrooms.starterjwt.controllers.UserController;
 import com.openclassrooms.starterjwt.mapper.UserMapper;
@@ -56,6 +54,7 @@ public class unitTestAuthAndUserServices {
 
 	@Mock
 	private AuthController authController;
+	
 
 	// test find user by id
 	@Test
@@ -75,7 +74,7 @@ public class unitTestAuthAndUserServices {
 		System.err.println(result);
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
-	// test bad credentials on login
+	// test  good credentials on login
 	@Test
     void testAuthenticateUser() {
         LoginRequest loginRequest = new LoginRequest();
