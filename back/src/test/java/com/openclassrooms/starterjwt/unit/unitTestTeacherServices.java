@@ -1,17 +1,9 @@
 package com.openclassrooms.starterjwt.unit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import java.util.Optional;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
 import com.openclassrooms.starterjwt.services.TeacherService;
-
-import lombok.NonNull;
 
 
 public class unitTestTeacherServices {

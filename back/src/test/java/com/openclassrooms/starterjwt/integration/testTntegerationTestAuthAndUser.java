@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest
-public class testTntegerationTestTeacherServices {
+public class testTntegerationTestAuthAndUser {
 
 	@InjectMocks
 	private UserController userController;
