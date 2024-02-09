@@ -2,31 +2,21 @@ package com.openclassrooms.starterjwt.unit;
 
 import static org.mockito.ArgumentMatchers.any;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import com.openclassrooms.starterjwt.controllers.AuthController;
 import com.openclassrooms.starterjwt.controllers.UserController;
 import com.openclassrooms.starterjwt.mapper.UserMapper;
 import com.openclassrooms.starterjwt.repository.UserRepository;
-import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
 import com.openclassrooms.starterjwt.services.UserService;
 import org.mockito.InjectMocks;
 import com.openclassrooms.starterjwt.models.User;
-import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import com.openclassrooms.starterjwt.dto.UserDto;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.springframework.security.core.Authentication;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 
 @SpringBootTest
@@ -34,11 +24,6 @@ public class unitTestAuthAndUserServices {
 
 	@InjectMocks
 	private UserController userController;
-	@Autowired
-	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private JwtUtils jwtUtils;
 
 	@Mock
 	private UserRepository userRepository;
@@ -74,4 +59,13 @@ public class unitTestAuthAndUserServices {
 		System.err.println(result);
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
+	// test for bad id on delete user by id
+	@Test
+	public void testDeleteUserBadID() {
+		when(userService.findById(any(Long.class))).thenReturn(null); 
+		ResponseEntity<?>  result = userController.save("1");
+		assertThat(result.getStatusCodeValue() == 200);
+	}
+
+
 }
