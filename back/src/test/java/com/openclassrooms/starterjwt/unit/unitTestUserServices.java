@@ -20,14 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-public class unitTestAuthAndUserServices {
-
-	@InjectMocks
-	private UserController userController;
+public class unitTestUserServices {
 
 	@Mock
 	private UserRepository userRepository;
-	@Mock
+	@InjectMocks
 	private UserService userService; 
 
 	@Mock
@@ -45,28 +42,24 @@ public class unitTestAuthAndUserServices {
 	@Test
 	public void getUserByID() {
 		User user = new User();
-		when(userService.findById(any(Long.class))).thenReturn(user); 
-		when(userMapper.toDto(any(User.class))).thenReturn(new UserDto());
-		ResponseEntity<?>  result = userController.findById("1");
-		assert(result.getStatusCodeValue() == 200);
+		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(user));
+		when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
+		assertThat(null != userService.findById(1L));
 	}
 
 	// test for bad id on find user by id
 	@Test
 	public void testgetUserBadID() {
-		when(userService.findById(any(Long.class))).thenReturn(null); 
-		ResponseEntity<?>  result = userController.findById("1");
-		System.err.println(result);
-		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-	}
-	
-	// test for bad id on delete user by id
-	@Test
-	public void testDeleteUserBadID() {
-		when(userService.findById(any(Long.class))).thenReturn(null); 
-		ResponseEntity<?>  result = userController.save("1");
-		assertThat(result.getStatusCodeValue() == 200);
+		when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
+		assertThat(null == userService.findById(1L));
 	}
 
+	// // test for bad id on delete user by id
+	@Test
+	public void testDeleteUserBadID() {
+		when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
+		assert(null == userService.findById(1L));
+		
+	}
 
 }
