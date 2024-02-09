@@ -59,6 +59,7 @@ public class unitTestAuthAndUserServices {
 		System.err.println(result);
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
+	
 	// test for bad id on delete user by id
 	@Test
 	public void testDeleteUserBadID() {
