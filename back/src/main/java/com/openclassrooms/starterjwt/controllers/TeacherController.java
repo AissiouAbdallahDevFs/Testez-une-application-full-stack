@@ -1,5 +1,6 @@
 package com.openclassrooms.starterjwt.controllers;
 
+import com.openclassrooms.starterjwt.dto.TeacherDto;
 import com.openclassrooms.starterjwt.mapper.TeacherMapper;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.services.TeacherService;
@@ -41,5 +42,10 @@ public class TeacherController {
         List<Teacher> teachers = this.teacherService.findAll();
 
         return ResponseEntity.ok().body(this.teacherMapper.toDto(teachers));
+    }
+
+    public ResponseEntity<?> update(TeacherDto teacherDto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }

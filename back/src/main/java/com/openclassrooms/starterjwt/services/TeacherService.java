@@ -21,4 +21,14 @@ public class TeacherService {
     public Teacher findById(Long id) {
         return this.teacherRepository.findById(id).orElse(null);
     }
+
+    public Object create(Teacher teacher) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    }
+
+    public Object update(Teacher teacher) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
 }

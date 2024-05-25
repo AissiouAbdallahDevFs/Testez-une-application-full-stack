@@ -8,4 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = "spring")
 public interface TeacherMapper extends EntityMapper<TeacherDto, Teacher> {
+
+    Object toTeacher(TeacherDto teacherDto);
 }
