@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,49 +31,93 @@ public class SessionControllerIntegrationTest {
     private SessionMapper sessionMapper;
 
     private Session session;
+    private SessionDto sessionDto;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        // Create a new session and save it
+        // Create a new session
         session = new Session();
-        session.setName("Yoga Session"); // Set other necessary fields
-        session.setId(1L); // Set the ID if necessary
-        when(sessionService.create(session)).thenReturn(session);
-        session = sessionService.create(session); // Mocked creation
+        session.setName("Yoga Session");
+        session.setId(1L);
+
+        // Initialize sessionDto
+        sessionDto = new SessionDto();
+        sessionDto.setName("Yoga Session");
+
+        // Mock the behavior of the service and mapper
+        when(sessionService.create(any(Session.class))).thenReturn(session);
+        when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
+        when(sessionMapper.toEntity(any(SessionDto.class))).thenReturn(session);
     }
 
     @AfterEach
     void tearDown() {
-        // Delete the session after each test
-        sessionService.delete(session.getId());
+        if (session != null) {
+            sessionService.delete(session.getId());
+        }
     }
 
-    // Test find session by id integration
-    @SuppressWarnings("null")
     @Test
     void findById_WithValidId_ReturnsSessionDto() {
-        // Given
         Long sessionId = session.getId();
         String id = sessionId.toString();
 
-        // Mock the service and mapper behavior
         when(sessionService.getById(sessionId)).thenReturn(session);
-
-        // Create a SessionDto
-        SessionDto sessionDto = new SessionDto();
         sessionDto.setId(sessionId);
         sessionDto.setName("Yoga Session");
         when(sessionMapper.toDto(session)).thenReturn(sessionDto);
 
-        // When
         ResponseEntity<?> result = sessionController.findById(id);
 
-        // Then
         assertThat(result.getStatusCodeValue()).isEqualTo(200);
         assertThat(result.getBody()).isInstanceOf(SessionDto.class);
         SessionDto returnedSessionDto = (SessionDto) result.getBody();
         assertThat(returnedSessionDto.getId()).isEqualTo(sessionId);
         assertThat(returnedSessionDto.getName()).isEqualTo("Yoga Session");
     }
+
+    @Test
+    void create_WithValidSession_ReturnsSessionDto() {
+        sessionDto.setName("Yoga Session 2");
+
+        Session newSession = new Session();
+        newSession.setName("Yoga Session 2");
+        when(sessionService.create(any(Session.class))).thenReturn(newSession);
+
+        SessionDto createdSessionDto = new SessionDto();
+        createdSessionDto.setName("Yoga Session 2");
+        when(sessionMapper.toDto(newSession)).thenReturn(createdSessionDto);
+        when(sessionMapper.toEntity(any(SessionDto.class))).thenReturn(newSession);
+
+        ResponseEntity<?> result = sessionController.create(sessionDto);
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(200);
+        assertThat(result.getBody()).isInstanceOf(SessionDto.class);
+        SessionDto returnedSessionDto = (SessionDto) result.getBody();
+        assertThat(returnedSessionDto.getName()).isEqualTo("Yoga Session 2");
+    }
+
+    @Test
+    void update_WithValidSession_ReturnsSessionDto() {
+        Long sessionId = session.getId();
+        String id = sessionId.toString();
+        sessionDto.setName("Yoga Session 2");
+
+        when(sessionService.update(sessionId, session)).thenReturn(session);
+        sessionDto.setId(sessionId);
+        sessionDto.setName("Yoga Session 2");
+        when(sessionMapper.toDto(session)).thenReturn(sessionDto);
+
+        ResponseEntity<?> result = sessionController.update(id, sessionDto);
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(200);
+        assertThat(result.getBody()).isInstanceOf(SessionDto.class);
+        SessionDto returnedSessionDto = (SessionDto) result.getBody();
+        assertThat(returnedSessionDto.getId()).isEqualTo(sessionId);
+        assertThat(returnedSessionDto.getName()).isEqualTo("Yoga Session 2");
+    }
+
+
+ 
 }

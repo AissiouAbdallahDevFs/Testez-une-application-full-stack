@@ -1,5 +1,6 @@
 package com.openclassrooms.starterjwt.unit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,6 +37,40 @@ public class unitTestTeacherServices {
         when(teacherRepository.findById(any(Long.class))).thenReturn(Optional.of(teacher));
         assert (teacherService.findById(1L) != null);
     }
+
+    // test find teacher by id services
+    @Test
+    public void testGetTeacherByIDBad() {
+        when(teacherRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        assert (teacherService.findById(1L) == null)
+    }
+
+
+
+    // test create teacher services
+    @Test
+    public void testCreateTeacher() {
+        when(teacherRepository.save(any(Teacher.class))).thenReturn(new Teacher());
+        assert (teacherService.create(new Teacher()) != null);
+    }
+
+    // test create teacher services
+    @Test
+    public void testCreateTeacherBad() {
+        Teacher teacher = new Teacher();
+        when(teacherRepository.save(any(Teacher.class))).thenReturn(teacher);
+        assert (teacherService.create(teacher).equals(teacher));
+    }
+
+    // test get all teachers
+    @Test
+    public void testGetAllTeachers() {
+        Teacher teacher = new Teacher();
+        when(teacherRepository.findAll()).thenReturn(java.util.List.of(teacher));
+        assert (teacherService.findAll().size() == 1);
+    }
+
+
 
 
 

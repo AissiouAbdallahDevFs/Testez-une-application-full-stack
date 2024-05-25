@@ -68,4 +68,30 @@ public class TeacherControllerIntegrationTest {
         assertThat(returnedTeacherDto.getFirstName()).isEqualTo("John");
         assertThat(returnedTeacherDto.getLastName()).isEqualTo("Doe");
     }
+
+    // Test find all teachers integration
+    @Test
+    void findAll_ReturnsListOfTeacherDto() {
+        // Mock the service and mapper behavior
+        when(teacherService.findAll()).thenReturn(java.util.List.of(teacher));
+
+        // Create a TeacherDto
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setId(1L);
+        teacherDto.setFirstName("John");
+        teacherDto.setLastName("Doe");
+        when(teacherMapper.toDto(java.util.List.of(teacher))).thenReturn(java.util.List.of(teacherDto));
+
+        // When
+        ResponseEntity<?> result = teacherController.findAll();
+
+        // Then
+        assertThat(result.getStatusCodeValue()).isEqualTo(200);
+        assertThat(result.getBody()).isInstanceOf(java.util.List.class);
+        java.util.List<TeacherDto> returnedTeacherDtos = (java.util.List<TeacherDto>) result.getBody();
+        assertThat(returnedTeacherDtos.size()).isEqualTo(1);
+        assertThat(returnedTeacherDtos.get(0).getId()).isEqualTo(1L);
+        assertThat(returnedTeacherDtos.get(0).getFirstName()).isEqualTo("John");
+        assertThat(returnedTeacherDtos.get(0).getLastName()).isEqualTo("Doe");
+    }
 }

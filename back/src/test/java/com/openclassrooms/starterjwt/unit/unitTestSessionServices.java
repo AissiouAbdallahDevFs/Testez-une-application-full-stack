@@ -76,4 +76,41 @@ public class unitTestSessionServices {
         when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.empty());
         assert (sessionService.getById(1L) == null);
     }
+
+    // test delete session
+    @Test
+    public void testDeleteSession() {
+        Session session = new Session();
+        session.setId(1L);
+        when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.of(session));
+        sessionService.delete(1L);
+        assert (sessionService.getById(1L) == null);
+    }
+
+    // test delete session bad
+    @Test
+    public void testDeleteSessionBad() {
+        when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        sessionService.delete(1L);
+        assert (sessionService.getById(1L) == null);
+    }
+
+    // test find session by id
+    @Test
+    public void testFindSessionById() {
+        Session session = new Session();
+        session.setId(1L);
+        when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.of(session));
+        assert (sessionService.getById(1L).getId() == 1L);
+    }
+
+    // test find session by id bad
+    @Test
+    public void testFindSessionByIdBad() {
+        when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        assert (sessionService.getById(1L) == null
+        );
+
+    
+    
 }
