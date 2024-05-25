@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.integration;
+package com.openclassrooms.starterjwt.integrationController;
 
 import com.openclassrooms.starterjwt.controllers.SessionController;
 import com.openclassrooms.starterjwt.dto.SessionDto;

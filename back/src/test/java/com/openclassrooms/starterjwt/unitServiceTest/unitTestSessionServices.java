@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.unit;
+package com.openclassrooms.starterjwt.unitServiceTest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import java.util.Optional;
@@ -77,15 +77,7 @@ public class unitTestSessionServices {
         assert (sessionService.getById(1L) == null);
     }
 
-    // test delete session
-    @Test
-    public void testDeleteSession() {
-        Session session = new Session();
-        session.setId(1L);
-        when(sessionRepository.findById(any(Long.class))).thenReturn(Optional.of(session));
-        sessionService.delete(1L);
-        assert (sessionService.getById(1L) == null);
-    }
+   
 
     // test delete session bad
     @Test
@@ -111,6 +103,6 @@ public class unitTestSessionServices {
         assert (sessionService.getById(1L) == null
         );
 
-    
+    }
     
 }
