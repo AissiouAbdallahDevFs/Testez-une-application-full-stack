@@ -34,8 +34,6 @@ public class testTntegerationTestSession {
 		String id = sessionId.toString();
 		Session session = new Session();
 		session.setId(sessionId);
-		session.setName("Math");
-		session.setDescription("Mathematics");
 
 		// When
 		when(sessionService.getById(sessionId)).thenReturn(session);
