@@ -1,5 +1,5 @@
 package com.openclassrooms.starterjwt.MapperTest;
-import com.openclassrooms.starterjwt.mapper.TeacherMapperImpl; 
+import com.openclassrooms.starterjwt.mapper.TeacherMapperImpl;
 import com.openclassrooms.starterjwt.mapper.TeacherMapper;
 import com.openclassrooms.starterjwt.dto.TeacherDto;
 import com.openclassrooms.starterjwt.models.Teacher;

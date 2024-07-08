@@ -28,7 +28,7 @@ import org.springframework.security.core.Authentication;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class testIntegrationTestAuthAndUser {
+public class IntegrationTestAuthAndUserTest {
 
     @Autowired
     private MockMvc mockMvc;

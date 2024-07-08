@@ -111,4 +111,29 @@ public class TestSignupRequest {
         signupRequest.setPassword(null);
         assertFalse(validator.validate(signupRequest).isEmpty());
     }
+
+    // Test for invalid email
+    @Test
+    void testInvalidEmail() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail("test");
+        signupRequest.setFirstName("John");
+        signupRequest.setLastName("Doe");
+        signupRequest.setPassword("test123");
+        assertFalse(validator.validate(signupRequest).isEmpty());
+    }
+
+    // Test for invalid password
+    @Test
+    void testInvalidPassword() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail("test@gmail.com");
+        signupRequest.setFirstName("John");
+        signupRequest.setLastName("Doe");
+        signupRequest.setPassword("test");
+        assertFalse(validator.validate(signupRequest).isEmpty());
+        
+    }
+
+
 }
