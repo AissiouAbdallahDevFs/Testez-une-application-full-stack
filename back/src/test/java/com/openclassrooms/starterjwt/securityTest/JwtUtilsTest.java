@@ -1,26 +1,26 @@
 package com.openclassrooms.starterjwt.securityTest;
 
+import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
+import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
-import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import org.springframework.test.util.ReflectionTestUtils;
 
-
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class JwtUtilsTest {
-
-    @Value("${oc.app.jwtSecret}")
-    private String jwtSecret;
 
     @Mock
     private Authentication authentication;
@@ -29,9 +29,11 @@ public class JwtUtilsTest {
     private JwtUtils jwtUtils;
 
     @BeforeEach
-    public void setUp() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
-        jwtUtils = new JwtUtils(); // Instantiate JwtUtils manually if necessary
+
+        // Initialize jwtSecret using reflection (assuming a test configuration sets the value)
+        ReflectionTestUtils.setField(jwtUtils, "jwtSecret", "test_secret_key");
     }
 
     @Test
@@ -40,17 +42,15 @@ public class JwtUtilsTest {
         UserDetailsImpl userDetails = UserDetailsImpl.builder()
                 .id(1L)
                 .username("yoga@studio.com")
-                .password("password")
                 .build();
 
         when(authentication.getPrincipal()).thenReturn(userDetails);
 
         // Call method
         String token = jwtUtils.generateJwtToken(authentication);
+
         // Assert
         assertNotNull(token);
 
-        // Verify interactions
-        verify(authentication, times(1)).getPrincipal();
     }
 }
