@@ -103,6 +103,25 @@ describe('RegisterComponent', () => {
         // Vérifier que l'utilisateur est redirigé vers la page de connexion
         cy.url().should('include', '/login');
     });
+
+    it('should register with Email already exists', () => {
+        // Intercepter la requête de registrement et fournir une réponse d'erreur
+        cy.intercept('POST', '/api/auth/register', {
+            statusCode: 400,
+            body: {
+                message: 'Email already exists'
+            },
+        }).as('registerRequest');
+        
+        // Remplir le formulaire avec des données valides
+        cy.get('input[formControlName=firstName]').type('John');
+        cy.get('input[formControlName=lastName]').type('Doe');
+        cy.get('input[formControlName=email]').type('yoga@studio.com')
+        cy.get('input[formControlName=password]').type('validpassword');
+
+        // Cliquer sur le bouton de soumission
+        cy.get('button[type=submit]').click();
+    });
 });
     
 

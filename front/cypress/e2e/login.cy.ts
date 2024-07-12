@@ -46,7 +46,7 @@ describe('Login spec', () => {
       }).as('loginRequest');
 
       // Entrer les informations de connexion
-      cy.get('input[formControlName=email]').type("renedecarts@gmail.com");
+      cy.get('input[formControlName=email]').type("yogaf@studio.com");
       cy.get('input[formControlName=password]').type("test!1234");
       cy.get('button[type=submit]').click();
 
