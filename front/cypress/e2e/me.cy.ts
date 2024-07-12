@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('me', () => {
     it('Login successfull', () => {
         cy.visit('/login')

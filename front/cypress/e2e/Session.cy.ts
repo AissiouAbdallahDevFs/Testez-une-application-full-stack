@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('Session Management', () => {
         beforeEach(() => {
             cy.intercept('POST', '/api/auth/login', {
@@ -393,6 +394,26 @@ describe('Session Management', () => {
                 cy.visit('/session/1');
                 
             });
+            it('try to create session with out teacher', () => {
+                cy.visit('/login');
+                cy.get('input[formControlName=email]').type("yoga@studio.com");
+                cy.get('input[formControlName=password]').type("yourPassword");
+                cy.get('button[type=submit]').click();
+                
+                cy.wait('@login');
+                cy.wait('@session');
+
+                cy.intercept('GET', '/api/teacher', {
+                    body: []
+                }).as('getTeachers');
+
+                cy.contains('button', 'Create').click();
+
+                cy.get('input[formControlName=name]').type("totoekfe");
+                cy.get('input[formControlName=date]').type("2024-07-26");
+                cy.get('textarea[formControlName=description]').type("the best session ever");
+                cy.get('button[type=submit]').should('be.disabled');
+            });
             it('edit not found session', () => {
                 cy.visit('/login');
         
@@ -411,9 +432,8 @@ describe('Session Management', () => {
                 }).as('getSessionDetail');
         
                 cy.visit('/session'); // Assurez-vous que '/sessions/999' correspond à votre URL de test
-        
-               
             });
+            
     
 
     
