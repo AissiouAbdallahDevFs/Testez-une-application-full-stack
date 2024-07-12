@@ -1,27 +1,98 @@
+/// <reference types="cypress" />
+
 describe('Login spec', () => {
-  it('Login successfull', () => {
-    cy.visit('/login')
+  beforeEach(() => {
+      // Intercepter la requête de session et fournir une réponse vide
+      cy.intercept('GET', '/api/session', []).as('session');
+  });
 
-    cy.intercept('POST', '/api/auth/login', {
-      body: {
-        id: 1,
-        username: 'userName',
-        firstName: 'firstName',
-        lastName: 'lastName',
-        admin: true
-      },
-    })
+  it('Login successful', () => {
+      // Visiter la page de login
+      cy.visit('/login');
 
-    cy.intercept(
-      {
-        method: 'GET',
-        url: '/api/session',
-      },
-      []).as('session')
+      // Intercepter la requête de login et fournir une réponse simulée
+      cy.intercept('POST', '/api/auth/login', {
+          body: {
+              id: 1,
+              username: 'userName',
+              firstName: 'firstName',
+              lastName: 'lastName',
+              admin: true
+          },
+      }).as('loginRequest');
 
-    cy.get('input[formControlName=email]').type("yoga@studio.com")
-    cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+      // Entrer les informations de connexion
+      cy.get('input[formControlName=email]').type("yoga@studio.com");
+      cy.get('input[formControlName=password]').type("test!1234");
+      cy.get('button[type=submit]').click();
 
-    cy.url().should('include', '/sessions')
-  })
+      // Vérifier que la requête de login est terminée avec succès
+      cy.wait('@loginRequest').its('response.statusCode').should('eq', 200);
+
+      // Vérifier que l'URL contient '/sessions' après la connexion
+      cy.url().should('include', '/sessions');
+  });
+
+  it('Login unsuccessful', () => {
+      // Visiter la page de login
+      cy.visit('/login');
+
+      // Intercepter la requête de login et fournir une réponse d'erreur
+      cy.intercept('POST', '/api/auth/login', {
+          statusCode: 401,
+          body: {
+              message: 'Invalid credentials'
+          },
+      }).as('loginRequest');
+
+      // Entrer les informations de connexion
+      cy.get('input[formControlName=email]').type("renedecarts@gmail.com");
+      cy.get('input[formControlName=password]').type("test!1234");
+      cy.get('button[type=submit]').click();
+
+      // Vérifier que la requête de login échoue
+      cy.wait('@loginRequest').its('response.statusCode').should('eq', 401);
+
+      // Vérifier que l'URL contient '/login' après l'échec de la connexion
+      cy.url().should('include', '/login');
+
+      // Vérifier que le message d'erreur est affiché
+      cy.contains('Invalid credentials').should('be.visible');
+  });
+
+  it('should disable submit button if password is empty', () => {
+      // Visiter la page de login
+      cy.visit('/login');
+
+      // Entrer un email valide sans mot de passe
+      cy.get('input[formControlName=email]').type("renedecarts@gmail.com");
+      cy.get('input[formControlName=password]').clear();
+
+      // Vérifier que le champ mot de passe est invalide
+      cy.get('input[formControlName=password]').should('have.class', 'ng-invalid');
+
+      // Vérifier que le message d'erreur est visible
+      cy.get('.error').should('be.visible');
+
+      // Vérifier que le bouton de soumission est désactivé
+      cy.get('button[type=submit]').should('be.disabled');
+  });
+
+  it('should disable submit button if email is empty', () => {
+      // Visiter la page de login
+      cy.visit('/login');
+
+      // Entrer un mot de passe valide sans email
+      cy.get('input[formControlName=email]').clear();
+      cy.get('input[formControlName=password]').type("wrongpass");
+
+      // Vérifier que le champ email est invalide
+      cy.get('input[formControlName=email]').should('have.class', 'ng-invalid');
+
+      // Vérifier que le message d'erreur est visible
+      cy.get('.error').should('be.visible');
+
+      // Vérifier que le bouton de soumission est désactivé
+      cy.get('button[type=submit]').should('be.disabled');
+  });
 });
