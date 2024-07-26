@@ -71,7 +71,7 @@ L'application Angular sera accessible à l'adresse : `http://localhost:4200`
 Git clone:
 
 ```bash
-git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing
+git clone https://github.com/AissiouAbdallahDevFs/Testez-une-application-full-stack.git
 ```
 
 Allez dans le dossier:
