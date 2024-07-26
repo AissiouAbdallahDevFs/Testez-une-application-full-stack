@@ -77,19 +77,31 @@ git clone https://github.com/AissiouAbdallahDevFs/Testez-une-application-full-st
 Allez dans le dossier:
 
 ```bash
-cd yoga
+cd Testez-une-application-full-stack
 ```
-
+```bash
+cd front
+```
 Installez les dépendances:
 
 ```bash
 npm install
 ```
-
 Lancez le Front-end:
 
 ```bash
 npm run start
+```
+```bash
+cd Testez-une-application-full-stack
+```
+```bash
+cd back
+```
+Installez les dépendances:
+
+```bash
+mvn install
 ```
 Lancez le back-end:
 
