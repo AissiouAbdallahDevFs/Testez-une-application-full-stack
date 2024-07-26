@@ -53,13 +53,6 @@ cd béack
 ```
 
 ```bash
-mvn spring-boot:run
-```
-
-L'API sera accessible à l'adresse : `http://localhost:8080`
-Installez les dépendances:
-
-```bash
 mvn install
 ```
 Lancez le back-end:
@@ -67,6 +60,9 @@ Lancez le back-end:
 ```bash
 mvn spring-boot:run
 ```
+
+L'API sera accessible à l'adresse : `http://localhost:8080`
+Installez les dépendances:
 
 
 
