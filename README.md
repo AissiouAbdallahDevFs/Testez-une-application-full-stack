@@ -118,6 +118,3 @@ Lancer les tests back :
 mvn test
 ```
 
-
-
-**Auteur:** [AISSIOU]
