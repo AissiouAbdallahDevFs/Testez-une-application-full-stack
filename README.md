@@ -19,53 +19,6 @@ Le testing a été réalisé conformément au plan fourni par l'équipe. Il couv
 │   └── sql/
 │       └── script.sql
 ```
-
-## Installation
-
-### Back-end (Java avec Spring)
-
-1. Assurez-vous d'avoir Maven installé.
-2. Accédez au répertoire `backend`.
-3. Exécutez la commande suivante :
-
-```bash
-mvn install
-```
-
-### Front-end (Angular)
-
-1. Assurez-vous d'avoir Node.js et npm installés.
-2. Accédez au répertoire `frontend`.
-3. Exécutez la commande suivante :
-
-```bash
-npm install
-```
-
-## Lancement de l'Application
-
-### Back-end (Java avec Spring)
-
-1. Accédez au répertoire `backend`.
-2. Exécutez la commande suivante :
-
-```bash
-mvn spring-boot:run
-```
-
-L'API sera accessible à l'adresse : `http://localhost:8080`
-
-### Front-end (Angular)
-
-1. Accédez au répertoire `frontend`.
-2. Exécutez la commande suivante :
-
-```bash
-ng serve
-```
-
-L'application Angular sera accessible à l'adresse : `http://localhost:4200`
-
 ## Démarrage du Projet
 
 Git clone:
@@ -90,14 +43,20 @@ npm install
 Lancez le Front-end:
 
 ```bash
-npm run start
+ng serve
 ```
+
+L'application Angular sera accessible à l'adresse : `http://localhost:4200`
+
 ```bash
 cd Testez-une-application-full-stack
 ```
+
 ```bash
-cd back
+mvn spring-boot:run
 ```
+
+L'API sera accessible à l'adresse : `http://localhost:8080`
 Installez les dépendances:
 
 ```bash
