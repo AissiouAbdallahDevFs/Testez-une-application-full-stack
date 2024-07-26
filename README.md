@@ -94,7 +94,7 @@ npm run start
 Lancez le back-end:
 
 ```bash
-mvn test
+mvn spring-boot:run
 ```
 
 
@@ -128,19 +128,26 @@ Le rapport est disponible ici :
 ```bash
 front/coverage/lcov-report/index.html
 ```
+```bash
+back\target\site\jacoco
+```
+```bash
+back\target\site\jacoco
+```
 
-### Tests Unitaires
+### Tests 
 
-Lancer les tests :
+Lancer les tests front :
 
 ```bash
 npm run test
 ```
-
-Pour suivre les changements :
+Lancer les tests back :
 
 ```bash
-npm run test:watch
+mvn test
 ```
+
+
 
 **Auteur:** [AISSIOU]
