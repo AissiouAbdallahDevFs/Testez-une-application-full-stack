@@ -49,7 +49,7 @@ ng serve
 L'application Angular sera accessible à l'adresse : `http://localhost:4200`
 
 ```bash
-cd Testez-une-application-full-stack
+cd béack
 ```
 
 ```bash
